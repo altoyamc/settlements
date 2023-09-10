@@ -3,6 +3,7 @@ package cc.altoya.settlements;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.bukkit.Bukkit;
@@ -10,8 +11,10 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 public class DatabaseConnections {
-  public Connection getConnection() {
-    File file = new File(Bukkit.getServer().getPluginManager().getPlugin("pluginname").getDataFolder(), "config.yml");
+  private static Connection connection = null;
+
+  public static void initializeConnection() {
+    File file = new File(Bukkit.getServer().getPluginManager().getPlugin("settlements").getDataFolder(), "config.yml");
     FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 
     String port = config.getString("databasePort");
@@ -21,14 +24,21 @@ public class DatabaseConnections {
 
     String url = "jdbc:mysql://" + ip + ":" + port;
 
+    String selectDatabaseQuery = "USE mysql";
+
     try {
       // Establish the connection using the provided username and password
-      return DriverManager.getConnection(url, username, password);
+      connection = DriverManager.getConnection(url, username, password);
+      PreparedStatement selectDatabaseStatement = connection.prepareStatement(selectDatabaseQuery);
+      selectDatabaseStatement.execute();
 
     } catch (SQLException e) {
-      System.out.println("Database connection failed.");
       e.printStackTrace();
     }
-    return null;
   }
+
+  public static Connection getConnection(){
+    return connection;
+  }
+
 }
