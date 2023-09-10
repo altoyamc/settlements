@@ -14,7 +14,6 @@ public class App extends JavaPlugin {
         try {
             initializeDatabase();
         } catch (SQLException e) {
-            e.printStackTrace();
         }
 
         //How to register commands
@@ -27,13 +26,10 @@ public class App extends JavaPlugin {
     private void initializeDatabase() throws SQLException{
         DatabaseConnections.initializeConnection();
 
-        String createTableQuery = "CREATE TABLE ? (id INT PRIMARY KEY AUTO_INCREMENT, uuid VARCHAR(36) NOT NULL, x INT, y INT, trusted TEXT)";
-
         String query = "CREATE TABLE `claims` (`id` INT PRIMARY KEY AUTO_INCREMENT,`uuid` VARCHAR(36) NOT NULL,`x` INT,`y` INT, `trusted` TEXT)";
 
         try (PreparedStatement statement = DatabaseConnections.getConnection().prepareStatement(query)) {
           // Execute the query to create the table
-        //   statement.setString(1, "claims");
           statement.executeUpdate();
         }
     
