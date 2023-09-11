@@ -25,6 +25,8 @@ public class Claims implements CommandExecutor {
         return handleClaim((Player) sender, args);
       case "unclaim":
         return handleUnclaim((Player) sender, args);
+      case "unclaimall":
+        return handleUnclaimAll((Player) sender, args);
       case "trust":
         return handleTrust((Player) sender, args);
       case "untrust":
@@ -61,7 +63,7 @@ public class Claims implements CommandExecutor {
 
       if (rowsAffected > 0) {
         player.sendMessage("Chunk claimed successfully.");
-      } 
+      }
 
     } catch (SQLIntegrityConstraintViolationException e) {
       player.sendMessage("You have already claimed this land.");
@@ -97,6 +99,36 @@ public class Claims implements CommandExecutor {
         player.sendMessage("Chunk unclaimed successfully.");
       } else {
         player.sendMessage("No claim found at your current location.");
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return true;
+  }
+
+  private boolean handleUnclaimAll(Player player, String[] args) {
+    if (!player.hasPermission("settlements.trust")) {
+      return false;
+    }
+    if (args.length != 1) {
+      return false;
+    }
+
+    String uuid = player.getUniqueId().toString();
+
+    String deleteQuery = "DELETE FROM claims WHERE uuid = ?";
+
+    try {
+      PreparedStatement deleteStatement = DatabaseConnections.getConnection().prepareStatement(deleteQuery);
+      deleteStatement.setString(1, uuid);
+
+      int rowsAffected = deleteStatement.executeUpdate();
+
+      if (rowsAffected > 0) {
+        player.sendMessage("All your claims have been successfully removed.");
+      } else {
+        player.sendMessage("No claims found for your UUID.");
       }
     } catch (SQLException e) {
       e.printStackTrace();
