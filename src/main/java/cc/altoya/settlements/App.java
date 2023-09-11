@@ -26,7 +26,7 @@ public class App extends JavaPlugin {
     private void initializeDatabase() throws SQLException{
         DatabaseConnections.initializeConnection();
 
-        String query = "CREATE TABLE `claims` (`id` INT PRIMARY KEY AUTO_INCREMENT,`uuid` VARCHAR(36) NOT NULL,`x` INT,`y` INT, `trusted` TEXT)";
+        String query = "CREATE TABLE `claims` (`id` INT PRIMARY KEY AUTO_INCREMENT,`uuid` VARCHAR(36) NOT NULL,`x` INT,`y` INT, `trusted` TEXT, UNIQUE KEY `unique_claim` (`uuid`, `x`, `y`))";
 
         try (PreparedStatement statement = DatabaseConnections.getConnection().prepareStatement(query)) {
           // Execute the query to create the table
