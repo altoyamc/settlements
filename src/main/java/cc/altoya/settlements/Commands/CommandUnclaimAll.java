@@ -30,9 +30,9 @@ public class CommandUnclaimAll {
       int rowsAffected = deleteStatement.executeUpdate();
 
       if (rowsAffected > 0) {
-        player.sendMessage("All your claims have been successfully removed.");
+        ChatUtil.sendSuccessMessage(player, "All your claims have been successfully removed.");
       } else {
-        player.sendMessage("No claims found for your UUID.");
+        ChatUtil.sendErrorMessage(player, "No claims found for your UUID.");
       }
     } catch (SQLException e) {
       e.printStackTrace();
