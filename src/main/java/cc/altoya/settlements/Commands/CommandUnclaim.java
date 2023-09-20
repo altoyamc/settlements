@@ -33,9 +33,9 @@ public class CommandUnclaim {
       int rowsAffected = deleteStatement.executeUpdate();
 
       if (rowsAffected > 0) {
-        player.sendMessage("Chunk unclaimed successfully.");
+        ChatUtil.sendSuccessMessage(player, "Chunk unclaimed successfully.");
       } else {
-        player.sendMessage("No claim found at your current location.");
+        ChatUtil.sendErrorMessage(player, "No claim found at your current location.");
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -43,5 +43,4 @@ public class CommandUnclaim {
 
     return true;
   }
-
 }
