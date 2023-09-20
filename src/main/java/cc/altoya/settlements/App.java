@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import cc.altoya.settlements.Claims.Claims;
+import cc.altoya.settlements.Commands.Claims;
 public class App extends JavaPlugin {
     @Override
     public void onEnable() {
