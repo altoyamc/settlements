@@ -33,6 +33,11 @@ public class CommandClaim {
       return false;
     }
 
+    if(!claimWithinBoundary(x, y)){
+      player.sendMessage("You must claim within X chunks of spawn.");
+      return false;
+    }
+
     String trusted = "{" + uuid + "}";
 
     String query = "INSERT INTO claims (uuid, x, y, trusted) VALUES (?, ?, ?, ?)";
@@ -56,6 +61,14 @@ public class CommandClaim {
     }
 
     return true;
+  }
+
+  public static boolean claimWithinBoundary(int x, int y){
+    int claimBoundary = 4;
+    boolean withinX = Math.abs(claimBoundary) - Math.abs(x) > 0;
+    boolean withinY = Math.abs(claimBoundary) - Math.abs(y) > 0;
+
+    return withinX && withinY;
   }
 
   public static int claimCount(String uuid){
