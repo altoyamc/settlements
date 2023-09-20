@@ -30,6 +30,8 @@ public class CommandList {
       selectStatement.setString(1, uuid);
       ResultSet resultSet = selectStatement.executeQuery();
 
+      player.sendMessage(ChatUtil.getPrimaryColour() + "=======================================");
+
       while (resultSet.next()) {
         String[] existingTrusted = resultSet.getString("trusted").replaceAll("[{}]", "").split(",");
         String names = "";
@@ -41,10 +43,10 @@ public class CommandList {
         int x = resultSet.getInt("x");
         int y = resultSet.getInt("y");
 
-        player.sendMessage(x + ":" + y + ":" + names);
+        player.sendMessage(ChatUtil.getSecondaryColour() + "X: " + x + " Y: " + y + " Trusted Users: " + names);
       }
 
-      player.sendMessage("Test");
+      player.sendMessage(ChatUtil.getPrimaryColour() + "=======================================");
 
     } catch (SQLException e) {
       e.printStackTrace();
