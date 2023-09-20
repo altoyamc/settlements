@@ -1,4 +1,4 @@
-package cc.altoya.settlements;
+package cc.altoya.settlements.Examples;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

@@ -6,7 +6,12 @@ import java.sql.SQLException;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import cc.altoya.settlements.Commands.Claims;
+import cc.altoya.settlements.Commands.MainChunk;
+import cc.altoya.settlements.Events.EventProtectBlocks;
+import cc.altoya.settlements.Events.EventProtectEntities;
+import cc.altoya.settlements.Events.EventProtectPvp;
+import cc.altoya.settlements.Events.EventProtectSwitches;
+import cc.altoya.settlements.Util.DatabaseConnections;
 public class App extends JavaPlugin {
     @Override
     public void onEnable() {
@@ -17,10 +22,14 @@ public class App extends JavaPlugin {
         }
 
         //How to register commands
-        this.getCommand("chunk").setExecutor(new Claims()); 
+        this.getCommand("chunk").setExecutor(new MainChunk()); 
 
         //How to register eventListeners
-        //this.getServer().getPluginManager().registerEvents(new ObjectWith@EventHandlers(), this);
+        this.getServer().getPluginManager().registerEvents(new EventProtectBlocks(), this);
+        this.getServer().getPluginManager().registerEvents(new EventProtectEntities(), this);
+        this.getServer().getPluginManager().registerEvents(new EventProtectPvp(), this);
+        this.getServer().getPluginManager().registerEvents(new EventProtectSwitches(), this);
+
     }
 
     private void initializeDatabase() throws SQLException{

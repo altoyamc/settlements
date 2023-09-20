@@ -1,4 +1,4 @@
-package cc.altoya.settlements;
+package cc.altoya.settlements.Util;
 
 import java.io.File;
 import java.sql.Connection;

@@ -6,7 +6,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 
 import org.bukkit.entity.Player;
 
-import cc.altoya.settlements.DatabaseConnections;
+import cc.altoya.settlements.Util.DatabaseConnections;
 
 public class CommandClaim {
   public static boolean handleClaim(Player player, String[] args) {

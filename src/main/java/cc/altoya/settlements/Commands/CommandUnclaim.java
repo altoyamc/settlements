@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import org.bukkit.entity.Player;
 
-import cc.altoya.settlements.DatabaseConnections;
+import cc.altoya.settlements.Util.DatabaseConnections;
 
 public class CommandUnclaim {
   public static boolean handleUnclaim(Player player, String[] args) {

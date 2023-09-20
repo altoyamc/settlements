@@ -8,8 +8,8 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import cc.altoya.settlements.DatabaseConnections;
 import cc.altoya.settlements.Util.ChatUtil;
+import cc.altoya.settlements.Util.DatabaseConnections;
 
 public class CommandList {
   public static boolean handleList(Player player, String[] args) {

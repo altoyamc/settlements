@@ -9,7 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import cc.altoya.settlements.DatabaseConnections;
+import cc.altoya.settlements.Util.DatabaseConnections;
 
 public class CommandTrust {
   public static boolean handleTrust(Player player, String[] args) {
