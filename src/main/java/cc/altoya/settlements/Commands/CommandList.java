@@ -28,13 +28,6 @@ public class CommandList {
       selectStatement.setString(1, uuid);
       ResultSet resultSet = selectStatement.executeQuery();
 
-      player.sendMessage("" + ChatUtil.getPrimaryColour() + "Test");
-      player.sendMessage("" + ChatUtil.getSecondaryColour() + "Test");
-
-
-      ChatUtil.sendErrorMessage(player, "test");
-      ChatUtil.sendSuccessMessage(player, "test");
-
       while (resultSet.next()) {
         String[] existingTrusted = resultSet.getString("trusted").replaceAll("[{}]", "").split(",");
         String names = "";
