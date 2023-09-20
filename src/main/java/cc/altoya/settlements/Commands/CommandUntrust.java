@@ -27,7 +27,7 @@ public class CommandUntrust {
     OfflinePlayer targetPlayer = Bukkit.getOfflinePlayer(targetName);
 
     if (targetPlayer == null) {
-      player.sendMessage("This player couldn't be found.");
+      ChatUtil.sendErrorMessage(player, "This player couldn't be found.");
       return true;
     }
 
@@ -49,7 +49,7 @@ public class CommandUntrust {
         String existingTrusted = resultSet.getString("trusted").replaceAll("}", "");
 
         if (!existingTrusted.contains(targetUUID.toString())) {
-          player.sendMessage("This person isn't trusted.");
+          ChatUtil.sendErrorMessage(player, "This person isn't trusted.");
           return true;
         }
 
@@ -74,9 +74,9 @@ public class CommandUntrust {
         int rowsUpdated = updateStatement.executeUpdate();
 
         if (rowsUpdated > 0) {
-          player.sendMessage("Player has been untrusted successfully.");
+          ChatUtil.sendSuccessMessage(player, "Player has been untrusted successfully.");
         } else {
-          player.sendMessage("Untrusting player has failed.");
+          ChatUtil.sendErrorMessage(player, "Untrusting player has failed.");
         }
       }
 
