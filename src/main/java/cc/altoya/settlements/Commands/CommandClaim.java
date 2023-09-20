@@ -1,10 +1,14 @@
 package cc.altoya.settlements.Commands;
 
+import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import cc.altoya.settlements.Util.DatabaseConnections;
@@ -23,18 +27,25 @@ public class CommandClaim {
 
     int claimCount = claimCount(uuid);
 
+    File file = new File(Bukkit.getServer().getPluginManager().getPlugin("settlements").getDataFolder(), "config.yml");
+    FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+
+    int claimCountLimit = config.getInt("claimCountLimit");
+    int claimCloseByHowManyChunks = config.getInt("claimCloseByHowManyChunks");
+    int claimChunkBoundary = config.getInt("claimChunkBoundary");
+
     if(claimCount != 0 && !connectedToCurrentClaims(uuid, x, y)){
-      player.sendMessage("Your claims must be within 1 chunk of each other.");
+      player.sendMessage("Your claims must be within " + claimCloseByHowManyChunks + " chunk of each other.");
       return false;
     }
 
-    if(claimCount > 9){
-      player.sendMessage("You have hit your claim limit.");
+    if(claimCount > claimCountLimit){
+      player.sendMessage("You have hit your claim limit of " + claimCountLimit + ".");
       return false;
     }
 
     if(!claimWithinBoundary(x, y)){
-      player.sendMessage("You must claim within X chunks of spawn.");
+      player.sendMessage("You must claim within " + claimChunkBoundary + " chunks of spawn.");
       return false;
     }
 
@@ -64,9 +75,13 @@ public class CommandClaim {
   }
 
   public static boolean claimWithinBoundary(int x, int y){
-    int claimBoundary = 4;
-    boolean withinX = Math.abs(claimBoundary) - Math.abs(x) > 0;
-    boolean withinY = Math.abs(claimBoundary) - Math.abs(y) > 0;
+    File file = new File(Bukkit.getServer().getPluginManager().getPlugin("settlements").getDataFolder(), "config.yml");
+    FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+
+    int claimChunkBoundary = config.getInt("claimChunkBoundary");
+
+    boolean withinX = Math.abs(claimChunkBoundary) - Math.abs(x) > 0;
+    boolean withinY = Math.abs(claimChunkBoundary) - Math.abs(y) > 0;
 
     return withinX && withinY;
   }

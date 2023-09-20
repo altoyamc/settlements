@@ -51,6 +51,10 @@ public class App extends JavaPlugin {
         getConfig().addDefault("databaseUrl", "0.0.0.0");
         getConfig().addDefault("databaseUsername", "root");
         getConfig().addDefault("databasePassword", "password");
+        getConfig().addDefault("claimCountLimit", 9);
+        getConfig().addDefault("claimChunkBoundary", 64);
+        getConfig().addDefault("claimCloseByHowManyChunks", 1);
+
         getConfig().options().copyDefaults(true);
         saveConfig();
     }
