@@ -9,11 +9,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
+import cc.altoya.settlements.Util.ChatUtil;
 import cc.altoya.settlements.Util.DatabaseConnections;
 
 public class CommandUntrust {
   public static boolean handleUntrust(Player player, String[] args) {
     if (!player.hasPermission("settlements.untrust")) {
+      ChatUtil.sendErrorMessage(player, "You don't have permission to run this command.");
       return true;
     }
     if (args.length != 2) {

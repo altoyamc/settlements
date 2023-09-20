@@ -5,11 +5,13 @@ import java.sql.SQLException;
 
 import org.bukkit.entity.Player;
 
+import cc.altoya.settlements.Util.ChatUtil;
 import cc.altoya.settlements.Util.DatabaseConnections;
 
 public class CommandUnclaim {
   public static boolean handleUnclaim(Player player, String[] args) {
     if (!player.hasPermission("settlements.unclaim")) {
+      ChatUtil.sendErrorMessage(player, "You don't have permission to run this command.");
       return true;
     }
     if (args.length != 1) {

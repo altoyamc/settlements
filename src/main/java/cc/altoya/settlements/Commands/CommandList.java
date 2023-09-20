@@ -8,11 +8,13 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import cc.altoya.settlements.Util.ChatUtil;
 import cc.altoya.settlements.Util.DatabaseConnections;
 
 public class CommandList {
   public static boolean handleList(Player player, String[] args) {
     if (!player.hasPermission("settlements.list")) {
+      ChatUtil.sendErrorMessage(player, "You don't have permission to run this command.");
       return true;
     }
     if (args.length != 1) {
