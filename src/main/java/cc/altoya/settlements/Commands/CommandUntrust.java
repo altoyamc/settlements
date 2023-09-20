@@ -14,10 +14,10 @@ import cc.altoya.settlements.Util.DatabaseConnections;
 public class CommandUntrust {
   public static boolean handleUntrust(Player player, String[] args) {
     if (!player.hasPermission("settlements.untrust")) {
-      return false;
+      return true;
     }
     if (args.length != 2) {
-      return false;
+      return true;
     }
 
     String targetName = args[1];
@@ -25,7 +25,7 @@ public class CommandUntrust {
 
     if (targetPlayer == null) {
       player.sendMessage("This player couldn't be found.");
-      return false;
+      return true;
     }
 
     UUID targetUUID = targetPlayer.getUniqueId();
@@ -47,7 +47,7 @@ public class CommandUntrust {
 
         if (!existingTrusted.contains(targetUUID.toString())) {
           player.sendMessage("This person isn't trusted.");
-          return false;
+          return true;
         }
 
         String[] trusted = existingTrusted.toString().split(",");

@@ -14,10 +14,10 @@ import cc.altoya.settlements.Util.DatabaseConnections;
 public class CommandTrust {
   public static boolean handleTrust(Player player, String[] args) {
     if (!player.hasPermission("settlements.trust")) {
-      return false;
+      return true;
     }
     if (args.length != 2) {
-      return false;
+      return true;
     }
 
     String targetName = args[1];
@@ -25,7 +25,7 @@ public class CommandTrust {
 
     if (targetPlayer == null) {
       player.sendMessage("This player couldn't be found.");
-      return false;
+      return true;
     }
 
     UUID targetUUID = targetPlayer.getUniqueId();
@@ -46,7 +46,7 @@ public class CommandTrust {
 
         if (existingTrusted.contains(targetUUID.toString())) {
           player.sendMessage("This person is already trusted.");
-          return false;
+          return true;
         }
 
         existingTrusted = existingTrusted + "," + targetUUID + "}";

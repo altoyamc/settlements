@@ -9,10 +9,10 @@ public class MainChunk implements CommandExecutor {
   @Override
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     if (!command.getName().equalsIgnoreCase("chunk")) {
-      return false;
+      return true;
     }
     if (!(sender instanceof Player)) {
-      return false;
+      return true;
     }
     switch (args[0].toLowerCase()) {
       case "claim":
@@ -27,7 +27,6 @@ public class MainChunk implements CommandExecutor {
         return CommandUntrust.handleUntrust((Player) sender, args);
       case "list":
         return CommandList.handleList((Player) sender, args);
-
     }
 
     return true;

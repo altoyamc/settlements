@@ -13,10 +13,10 @@ import cc.altoya.settlements.Util.DatabaseConnections;
 public class CommandList {
   public static boolean handleList(Player player, String[] args) {
     if (!player.hasPermission("settlements.list")) {
-      return false;
+      return true;
     }
     if (args.length != 1) {
-      return false;
+      return true;
     }
 
     String uuid = player.getUniqueId().toString();

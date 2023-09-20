@@ -10,10 +10,10 @@ import cc.altoya.settlements.Util.DatabaseConnections;
 public class CommandUnclaim {
   public static boolean handleUnclaim(Player player, String[] args) {
     if (!player.hasPermission("settlements.unclaim")) {
-      return false;
+      return true;
     }
     if (args.length != 1) {
-      return false;
+      return true;
     }
     String uuid = player.getUniqueId().toString();
     int x = player.getLocation().getChunk().getX();

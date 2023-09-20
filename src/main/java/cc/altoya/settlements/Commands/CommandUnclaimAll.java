@@ -10,10 +10,10 @@ import cc.altoya.settlements.Util.DatabaseConnections;
 public class CommandUnclaimAll {
   public static boolean handleUnclaimAll(Player player, String[] args) {
     if (!player.hasPermission("settlements.trust")) {
-      return false;
+      return true;
     }
     if (args.length != 1) {
-      return false;
+      return true;
     }
 
     String uuid = player.getUniqueId().toString();

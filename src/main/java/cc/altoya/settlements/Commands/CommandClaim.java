@@ -16,10 +16,10 @@ import cc.altoya.settlements.Util.DatabaseConnections;
 public class CommandClaim {
   public static boolean handleClaim(Player player, String[] args) {
     if (!player.hasPermission("settlements.claim")) {
-      return false;
+      return true;
     }
     if (args.length != 1) {
-      return false;
+      return true;
     }
     String uuid = player.getUniqueId().toString();
     int x = player.getLocation().getChunk().getX();
@@ -36,17 +36,17 @@ public class CommandClaim {
 
     if(claimCount != 0 && !connectedToCurrentClaims(uuid, x, y)){
       player.sendMessage("Your claims must be within " + claimCloseByHowManyChunks + " chunk of each other.");
-      return false;
+      return true;
     }
 
     if(claimCount > claimCountLimit){
       player.sendMessage("You have hit your claim limit of " + claimCountLimit + ".");
-      return false;
+      return true;
     }
 
     if(!claimWithinBoundary(x, y)){
       player.sendMessage("You must claim within " + claimChunkBoundary + " chunks of spawn.");
-      return false;
+      return true;
     }
 
     String trusted = "{" + uuid + "}";
