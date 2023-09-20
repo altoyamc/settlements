@@ -18,6 +18,7 @@ public class CommandList {
       return true;
     }
     if (args.length != 1) {
+      ChatUtil.sendErrorMessage(player, "This command only requires one argument. /chunk list");
       return true;
     }
 

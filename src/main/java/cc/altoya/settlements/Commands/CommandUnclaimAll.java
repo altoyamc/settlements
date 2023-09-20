@@ -15,6 +15,7 @@ public class CommandUnclaimAll {
       return true;
     }
     if (args.length != 1) {
+      ChatUtil.sendErrorMessage(player, "This command only requires one argument. /chunk unclaimall");
       return true;
     }
 

@@ -15,6 +15,7 @@ public class CommandUnclaim {
       return true;
     }
     if (args.length != 1) {
+      ChatUtil.sendErrorMessage(player, "This command only requires one argument. /chunk unclaim");
       return true;
     }
     String uuid = player.getUniqueId().toString();

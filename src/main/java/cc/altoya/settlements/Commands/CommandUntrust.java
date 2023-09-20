@@ -19,6 +19,7 @@ public class CommandUntrust {
       return true;
     }
     if (args.length != 2) {
+      ChatUtil.sendErrorMessage(player, "This command only requires two argument. /chunk untrust {username}");
       return true;
     }
 
