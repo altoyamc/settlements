@@ -38,17 +38,17 @@ public class CommandClaim {
     int claimChunkBoundary = config.getInt("claimChunkBoundary");
 
     if(claimCount != 0 && !connectedToCurrentClaims(uuid, x, y)){
-      player.sendMessage("Your claims must be within " + claimCloseByHowManyChunks + " chunk of each other.");
+      ChatUtil.sendErrorMessage(player, "Your claims must be within " + claimCloseByHowManyChunks + " chunk of each other.");
       return true;
     }
 
     if(claimCount > claimCountLimit){
-      player.sendMessage("You have hit your claim limit of " + claimCountLimit + ".");
+      ChatUtil.sendErrorMessage(player, "You have hit your claim limit of " + claimCountLimit + ".");
       return true;
     }
 
     if(!claimWithinBoundary(x, y)){
-      player.sendMessage("You must claim within " + claimChunkBoundary + " chunks of spawn.");
+      ChatUtil.sendErrorMessage(player, "You must claim within " + claimChunkBoundary + " chunks of spawn.");
       return true;
     }
 
@@ -65,11 +65,11 @@ public class CommandClaim {
       int rowsAffected = statement.executeUpdate();
 
       if (rowsAffected > 0) {
-        player.sendMessage("Chunk claimed successfully.");
+        ChatUtil.sendSuccessMessage(player, "Chunk claimed successfully.");
       }
 
     } catch (SQLIntegrityConstraintViolationException e) {
-      player.sendMessage("You have already claimed this land.");
+      ChatUtil.sendErrorMessage(player, "This land is already claimed.");
     } catch (SQLException e) {
       e.printStackTrace();
     }
