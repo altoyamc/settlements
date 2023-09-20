@@ -9,8 +9,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import cc.altoya.settlements.Commands.MainChunk;
 import cc.altoya.settlements.Events.EventProtectBlocks;
 import cc.altoya.settlements.Events.EventProtectEntities;
-import cc.altoya.settlements.Events.EventProtectPvp;
-import cc.altoya.settlements.Events.EventProtectSwitches;
 import cc.altoya.settlements.Util.DatabaseConnections;
 public class App extends JavaPlugin {
     @Override
@@ -27,8 +25,6 @@ public class App extends JavaPlugin {
         //How to register eventListeners
         this.getServer().getPluginManager().registerEvents(new EventProtectBlocks(), this);
         this.getServer().getPluginManager().registerEvents(new EventProtectEntities(), this);
-        this.getServer().getPluginManager().registerEvents(new EventProtectPvp(), this);
-        this.getServer().getPluginManager().registerEvents(new EventProtectSwitches(), this);
 
     }
 

@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 
 public class ClaimUtil {
   public static boolean isPlayerTrusted(Player player, Location location){
-
     String uuid = player.getUniqueId().toString();
     int x = location.getChunk().getX();
     int y = location.getChunk().getZ();
