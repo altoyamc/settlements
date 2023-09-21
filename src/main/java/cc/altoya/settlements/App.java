@@ -11,6 +11,7 @@ import cc.altoya.settlements.Commands.Settlement.MainSettlement;
 import cc.altoya.settlements.Events.EventProtectBlocks;
 import cc.altoya.settlements.Events.EventProtectEntities;
 import cc.altoya.settlements.Util.DatabaseConnections;
+
 public class App extends JavaPlugin {
     @Override
     public void onEnable() {
@@ -20,32 +21,40 @@ public class App extends JavaPlugin {
         } catch (SQLException e) {
         }
 
-        //How to register commands
-        this.getCommand("chunk").setExecutor(new MainChunk()); 
-        this.getCommand("settlement").setExecutor(new MainSettlement()); 
+        // How to register commands
+        this.getCommand("chunk").setExecutor(new MainChunk());
+        this.getCommand("settlement").setExecutor(new MainSettlement());
 
-        //How to register eventListeners
+        // How to register eventListeners
         this.getServer().getPluginManager().registerEvents(new EventProtectBlocks(), this);
         this.getServer().getPluginManager().registerEvents(new EventProtectEntities(), this);
 
     }
 
-    private void initializeDatabase() throws SQLException{
+    private void initializeDatabase() throws SQLException {
         DatabaseConnections.initializeConnection();
 
         String claimsTable = "CREATE TABLE `claims` (`id` INT PRIMARY KEY AUTO_INCREMENT,`uuid` VARCHAR(36) NOT NULL,`x` INT,`y` INT, `trusted` TEXT, UNIQUE KEY `unique_claim` (`uuid`, `x`, `y`))";
+        String settlementsTable = "CREATE TABLE `settlements` (`id` INT PRIMARY KEY AUTO_INCREMENT,`name` TEXT,`description` TEXT,`homeChunkX` INT,`homeChunkY` INT,`uuids` TEXT,`votesIds` TEXT)";
+        String votesTable = "CREATE TABLE `votes` (`id` INT PRIMARY KEY AUTO_INCREMENT,`action_id` INT,`uuid` VARCHAR(36) NOT NULL,`allowed_voters` TEXT,`voted_list` TEXT,`yes_count` INT,`no_count` INT)";
 
         try (PreparedStatement statement = DatabaseConnections.getConnection().prepareStatement(claimsTable)) {
-          // Execute the query to create the table
-          statement.executeUpdate();
+            statement.executeUpdate();
         }
-    
+
+        try (PreparedStatement statement = DatabaseConnections.getConnection().prepareStatement(settlementsTable)) {
+            statement.executeUpdate();
+        }
+
+        try (PreparedStatement statement = DatabaseConnections.getConnection().prepareStatement(votesTable)) {
+            statement.executeUpdate();
+        }
     }
 
-    private void initializeConfig(){
+    private void initializeConfig() {
         File configFile = new File(getDataFolder(), "config.yml");
 
-        if(configFile.exists()){
+        if (configFile.exists()) {
             return;
         }
 
@@ -61,5 +70,4 @@ public class App extends JavaPlugin {
         saveConfig();
     }
 
-    
 }
