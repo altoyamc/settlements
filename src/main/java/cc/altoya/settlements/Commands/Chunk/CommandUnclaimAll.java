@@ -1,4 +1,4 @@
-package cc.altoya.settlements.Commands;
+package cc.altoya.settlements.Commands.Chunk;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -9,7 +9,7 @@ import cc.altoya.settlements.Util.ChatUtil;
 import cc.altoya.settlements.Util.DatabaseConnections;
 
 public class CommandUnclaimAll {
-  public static boolean handleUnclaimAll(Player player, String[] args) {
+  public static boolean handle(Player player, String[] args) {
     if (!player.hasPermission("settlements.trust")) {
       ChatUtil.sendErrorMessage(player, "You don't have permission to run this command.");
       return true;

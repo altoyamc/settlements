@@ -6,7 +6,8 @@ import java.sql.SQLException;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import cc.altoya.settlements.Commands.MainChunk;
+import cc.altoya.settlements.Commands.Chunk.MainChunk;
+import cc.altoya.settlements.Commands.Settlement.MainSettlement;
 import cc.altoya.settlements.Events.EventProtectBlocks;
 import cc.altoya.settlements.Events.EventProtectEntities;
 import cc.altoya.settlements.Util.DatabaseConnections;
@@ -21,6 +22,7 @@ public class App extends JavaPlugin {
 
         //How to register commands
         this.getCommand("chunk").setExecutor(new MainChunk()); 
+        this.getCommand("settlement").setExecutor(new MainSettlement()); 
 
         //How to register eventListeners
         this.getServer().getPluginManager().registerEvents(new EventProtectBlocks(), this);
@@ -31,9 +33,9 @@ public class App extends JavaPlugin {
     private void initializeDatabase() throws SQLException{
         DatabaseConnections.initializeConnection();
 
-        String query = "CREATE TABLE `claims` (`id` INT PRIMARY KEY AUTO_INCREMENT,`uuid` VARCHAR(36) NOT NULL,`x` INT,`y` INT, `trusted` TEXT, UNIQUE KEY `unique_claim` (`uuid`, `x`, `y`))";
+        String claimsTable = "CREATE TABLE `claims` (`id` INT PRIMARY KEY AUTO_INCREMENT,`uuid` VARCHAR(36) NOT NULL,`x` INT,`y` INT, `trusted` TEXT, UNIQUE KEY `unique_claim` (`uuid`, `x`, `y`))";
 
-        try (PreparedStatement statement = DatabaseConnections.getConnection().prepareStatement(query)) {
+        try (PreparedStatement statement = DatabaseConnections.getConnection().prepareStatement(claimsTable)) {
           // Execute the query to create the table
           statement.executeUpdate();
         }

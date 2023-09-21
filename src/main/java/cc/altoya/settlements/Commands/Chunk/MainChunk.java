@@ -1,4 +1,4 @@
-package cc.altoya.settlements.Commands;
+package cc.altoya.settlements.Commands.Chunk;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,17 +16,17 @@ public class MainChunk implements CommandExecutor {
     }
     switch (args[0].toLowerCase()) {
       case "claim":
-        return CommandClaim.handleClaim((Player) sender, args);
+        return CommandClaim.handle((Player) sender, args);
       case "unclaim":
-        return CommandUnclaim.handleUnclaim((Player) sender, args);
+        return CommandUnclaim.handle((Player) sender, args);
       case "unclaimall":
-        return CommandUnclaimAll.handleUnclaimAll((Player) sender, args);
+        return CommandUnclaimAll.handle((Player) sender, args);
       case "trust":
-        return CommandTrust.handleTrust((Player) sender, args);
+        return CommandTrust.handle((Player) sender, args);
       case "untrust":
-        return CommandUntrust.handleUntrust((Player) sender, args);
+        return CommandUntrust.handle((Player) sender, args);
       case "list":
-        return CommandList.handleList((Player) sender, args);
+        return CommandList.handle((Player) sender, args);
     }
 
     return true;

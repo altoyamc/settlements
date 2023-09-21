@@ -9,3 +9,6 @@ commands:
   chunk:
     description: Claiming chunks
     usage: /chunk {var} {var}
+  settlement:
+    description: Settlements
+    usage: /settlement {var} {var}
