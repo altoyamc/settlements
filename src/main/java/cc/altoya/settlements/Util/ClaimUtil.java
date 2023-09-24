@@ -15,7 +15,7 @@ public class ClaimUtil {
     String query = "SELECT * FROM claims WHERE x = ? AND y = ?";
 
     try {
-      PreparedStatement selectStatement = DatabaseConnections.getConnection().prepareStatement(query);
+      PreparedStatement selectStatement = DatabaseUtil.getConnection().prepareStatement(query);
       selectStatement.setInt(1, x);
       selectStatement.setInt(2, y);
       ResultSet resultSet = selectStatement.executeQuery();
@@ -40,7 +40,7 @@ public class ClaimUtil {
     String query = "SELECT * FROM claims WHERE x = ? AND y = ?";
 
     try {
-      PreparedStatement selectStatement = DatabaseConnections.getConnection().prepareStatement(query);
+      PreparedStatement selectStatement = DatabaseUtil.getConnection().prepareStatement(query);
       selectStatement.setInt(1, x);
       selectStatement.setInt(2, y);
       ResultSet resultSet = selectStatement.executeQuery();

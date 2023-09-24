@@ -9,7 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import cc.altoya.settlements.Util.ChatUtil;
-import cc.altoya.settlements.Util.DatabaseConnections;
+import cc.altoya.settlements.Util.DatabaseUtil;
 
 public class CommandList {
   public static boolean handle(Player player, String[] args) {
@@ -26,7 +26,7 @@ public class CommandList {
 
     String query = "SELECT * FROM claims WHERE uuid = ?";
     try {
-      PreparedStatement selectStatement = DatabaseConnections.getConnection().prepareStatement(query);
+      PreparedStatement selectStatement = DatabaseUtil.getConnection().prepareStatement(query);
       selectStatement.setString(1, uuid);
       ResultSet resultSet = selectStatement.executeQuery();
 

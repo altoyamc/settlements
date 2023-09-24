@@ -10,7 +10,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import cc.altoya.settlements.Util.ChatUtil;
-import cc.altoya.settlements.Util.DatabaseConnections;
+import cc.altoya.settlements.Util.DatabaseUtil;
 
 public class CommandTrust {
   public static boolean handle(Player player, String[] args) {
@@ -39,7 +39,7 @@ public class CommandTrust {
 
     String query = "SELECT * FROM claims WHERE x = ? AND y = ?";
     try {
-      PreparedStatement selectStatement = DatabaseConnections.getConnection().prepareStatement(query);
+      PreparedStatement selectStatement = DatabaseUtil.getConnection().prepareStatement(query);
       selectStatement.setInt(1, x);
       selectStatement.setInt(2, y);
       ResultSet resultSet = selectStatement.executeQuery();
@@ -55,7 +55,7 @@ public class CommandTrust {
         existingTrusted = existingTrusted + "," + targetUUID + "}";
 
         String updateQuery = "UPDATE claims SET trusted = ? WHERE x = ? AND y = ? AND uuid = ?";
-        PreparedStatement updateStatement = DatabaseConnections.getConnection().prepareStatement(updateQuery);
+        PreparedStatement updateStatement = DatabaseUtil.getConnection().prepareStatement(updateQuery);
         updateStatement.setString(1, existingTrusted);
         updateStatement.setInt(2, x);
         updateStatement.setInt(3, y);

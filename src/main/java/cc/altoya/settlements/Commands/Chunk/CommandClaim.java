@@ -12,7 +12,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import cc.altoya.settlements.Util.ChatUtil;
-import cc.altoya.settlements.Util.DatabaseConnections;
+import cc.altoya.settlements.Util.DatabaseUtil;
 
 public class CommandClaim {
   public static boolean handle(Player player, String[] args) {
@@ -56,7 +56,7 @@ public class CommandClaim {
 
     String query = "INSERT INTO claims (uuid, x, y, trusted) VALUES (?, ?, ?, ?)";
     try {
-      PreparedStatement statement = DatabaseConnections.getConnection().prepareStatement(query);
+      PreparedStatement statement = DatabaseUtil.getConnection().prepareStatement(query);
       statement.setString(1, uuid);
       statement.setInt(2, x);
       statement.setInt(3, y);
@@ -93,7 +93,7 @@ public class CommandClaim {
     String query = "SELECT * FROM claims WHERE uuid = ?";
     int count = 0;
     try {
-      PreparedStatement selectStatement = DatabaseConnections.getConnection().prepareStatement(query);
+      PreparedStatement selectStatement = DatabaseUtil.getConnection().prepareStatement(query);
       selectStatement.setString(1, uuid);
       ResultSet resultSet = selectStatement.executeQuery();
     
@@ -110,7 +110,7 @@ public class CommandClaim {
   public static boolean connectedToCurrentClaims(String uuid, int x, int y){
     String query = "SELECT * FROM claims WHERE uuid = ?";
     try {
-      PreparedStatement selectStatement = DatabaseConnections.getConnection().prepareStatement(query);
+      PreparedStatement selectStatement = DatabaseUtil.getConnection().prepareStatement(query);
       selectStatement.setString(1, uuid);
       ResultSet resultSet = selectStatement.executeQuery();
     

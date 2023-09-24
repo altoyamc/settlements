@@ -5,12 +5,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-public class DatabaseConnections {
+public class DatabaseUtil {
   private static Connection connection = null;
 
   public static void initializeConnection() {
@@ -41,4 +44,24 @@ public class DatabaseConnections {
     return connection;
   }
 
+  public static String[] getListFromJson(String jsonString){
+    return jsonString.replaceAll("[{}]", "").split(",");
+  }
+
+  public static String getStringFromJson(String[] jsonList){
+    String jsonString = "{";
+    for(String current : jsonList){
+      jsonString += current + ",";
+    }
+
+    if(jsonList.length != 0){
+      jsonString = jsonString.substring(0, jsonString.length() - 1);
+    }
+
+    return jsonString;
+  }
+
+  public static String getStringFromJson(String object){
+    return "{" + object + "}";
+  }
 }

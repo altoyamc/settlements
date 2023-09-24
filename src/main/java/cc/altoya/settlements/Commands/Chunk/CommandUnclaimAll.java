@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import org.bukkit.entity.Player;
 
 import cc.altoya.settlements.Util.ChatUtil;
-import cc.altoya.settlements.Util.DatabaseConnections;
+import cc.altoya.settlements.Util.DatabaseUtil;
 
 public class CommandUnclaimAll {
   public static boolean handle(Player player, String[] args) {
@@ -24,7 +24,7 @@ public class CommandUnclaimAll {
     String deleteQuery = "DELETE FROM claims WHERE uuid = ?";
 
     try {
-      PreparedStatement deleteStatement = DatabaseConnections.getConnection().prepareStatement(deleteQuery);
+      PreparedStatement deleteStatement = DatabaseUtil.getConnection().prepareStatement(deleteQuery);
       deleteStatement.setString(1, uuid);
 
       int rowsAffected = deleteStatement.executeUpdate();

@@ -10,7 +10,7 @@ import cc.altoya.settlements.Commands.Chunk.MainChunk;
 import cc.altoya.settlements.Commands.Settlement.MainSettlement;
 import cc.altoya.settlements.Events.EventProtectBlocks;
 import cc.altoya.settlements.Events.EventProtectEntities;
-import cc.altoya.settlements.Util.DatabaseConnections;
+import cc.altoya.settlements.Util.DatabaseUtil;
 
 public class App extends JavaPlugin {
     @Override
@@ -32,21 +32,21 @@ public class App extends JavaPlugin {
     }
 
     private void initializeDatabase() throws SQLException {
-        DatabaseConnections.initializeConnection();
+        DatabaseUtil.initializeConnection();
 
         String claimsTable = "CREATE TABLE `claims` (`id` INT PRIMARY KEY AUTO_INCREMENT,`uuid` VARCHAR(36) NOT NULL,`x` INT,`y` INT, `trusted` TEXT, UNIQUE KEY `unique_claim` (`uuid`, `x`, `y`))";
-        String settlementsTable = "CREATE TABLE `settlements` (`id` INT PRIMARY KEY AUTO_INCREMENT,`name` TEXT,`description` TEXT,`homeChunkX` INT,`homeChunkY` INT,`uuids` TEXT,`votesIds` TEXT)";
+        String settlementsTable = "CREATE TABLE `settlements` (`id` INT PRIMARY KEY AUTO_INCREMENT,`name` TEXT,`description` TEXT,`uuids` TEXT,`votesIds` TEXT)";
         String votesTable = "CREATE TABLE `votes` (`id` INT PRIMARY KEY AUTO_INCREMENT,`action_id` INT,`uuid` VARCHAR(36) NOT NULL,`allowed_voters` TEXT,`voted_list` TEXT,`yes_count` INT,`no_count` INT)";
 
-        try (PreparedStatement statement = DatabaseConnections.getConnection().prepareStatement(claimsTable)) {
+        try (PreparedStatement statement = DatabaseUtil.getConnection().prepareStatement(claimsTable)) {
             statement.executeUpdate();
         }
 
-        try (PreparedStatement statement = DatabaseConnections.getConnection().prepareStatement(settlementsTable)) {
+        try (PreparedStatement statement = DatabaseUtil.getConnection().prepareStatement(settlementsTable)) {
             statement.executeUpdate();
         }
 
-        try (PreparedStatement statement = DatabaseConnections.getConnection().prepareStatement(votesTable)) {
+        try (PreparedStatement statement = DatabaseUtil.getConnection().prepareStatement(votesTable)) {
             statement.executeUpdate();
         }
     }
