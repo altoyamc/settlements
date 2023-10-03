@@ -17,6 +17,8 @@ public class MainSettlement implements CommandExecutor {
     switch (args[0].toLowerCase()) {
       case "new":
         return CommandNew.handle((Player) sender, args);
+      case "delete":
+        return CommandDelete.handle((Player) sender, args);
     }
 
     return true;
