@@ -19,6 +19,18 @@ public class MainSettlement implements CommandExecutor {
         return CommandNew.handle((Player) sender, args);
       case "delete":
         return CommandDelete.handle((Player) sender, args);
+      case "info":
+        return CommandInfo.handle((Player) sender, args);
+      case "invite":
+        return CommandInvite.handle((Player) sender, args);
+      case "uninvite":
+        return CommandUninvite.handle((Player) sender, args);
+      case "join":
+        return CommandJoin.handle((Player) sender, args);
+      case "leave":
+        return CommandLeave.handle((Player) sender, args);
+      case "kick":
+        return CommandKick.handle((Player) sender, args);
     }
 
     return true;
