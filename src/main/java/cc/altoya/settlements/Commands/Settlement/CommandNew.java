@@ -24,13 +24,16 @@ public class CommandNew {
     String description = "Default description, use /settlement description {descriptionText}";
     String uuids = DatabaseUtil.getStringFromJson(player.getUniqueId().toString());
     String votesIds = "{}";
+    String invitedUuids = "{}";
 
-    String query = "INSERT INTO settlements (name, description, uuids, votesIds) VALUES (?, ?, ?, ?)";
+
+    String query = "INSERT INTO settlements (name, description, uuids, invited_uuids, votes_ids) VALUES (?, ?, ?, ?)";
     try {
       PreparedStatement statement = DatabaseUtil.getConnection().prepareStatement(query);
       statement.setString(1, settlementName);
       statement.setString(2, description);
       statement.setString(3, uuids);
+      statement.setString(4, invitedUuids);
       statement.setString(4, votesIds);
 
       int rowsAffected = statement.executeUpdate();
