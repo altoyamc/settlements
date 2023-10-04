@@ -36,7 +36,7 @@ public class App extends JavaPlugin {
 
         String claimsTable = "CREATE TABLE `claims` (`id` INT PRIMARY KEY AUTO_INCREMENT,`uuid` VARCHAR(36) NOT NULL,`x` INT,`y` INT, `trusted` TEXT, UNIQUE KEY `unique_claim` (`uuid`, `x`, `y`))";
         String settlementsTable = "CREATE TABLE `settlements` (`id` INT PRIMARY KEY AUTO_INCREMENT,`name` TEXT,`description` TEXT,`uuids` TEXT,`votesIds` TEXT)";
-        String votesTable = "CREATE TABLE `votes` (`id` INT PRIMARY KEY AUTO_INCREMENT,`action_id` INT,`uuid` VARCHAR(36) NOT NULL,`allowed_voters` TEXT,`voted_list` TEXT,`yes_count` INT,`no_count` INT)";
+        String votesTable = "CREATE TABLE `votes` (`id` INT PRIMARY KEY AUTO_INCREMENT,`action_id` INT,`allowed_voters` TEXT,`voted_list` TEXT,`yes_count` INT,`no_count` INT)";
 
         try (PreparedStatement statement = DatabaseUtil.getConnection().prepareStatement(claimsTable)) {
             statement.executeUpdate();

@@ -15,6 +15,12 @@ public class CommandJoin {
       return true;
     }
 
+    //Get settlement
+    //Check user has no current settlement
+    //Check user has invite in invites
+    //Add user to settlement
+    //Remove invite from settlement
+
     return true;
   }
 

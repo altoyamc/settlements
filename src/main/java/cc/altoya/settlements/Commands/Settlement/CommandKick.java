@@ -15,6 +15,10 @@ public class CommandKick {
       return true;
     }
 
+    //Get settlement from user
+    //Check if user exists in settlement
+    //Start vote on kick
+
     return true;
   }
 

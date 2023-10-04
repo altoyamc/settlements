@@ -15,6 +15,10 @@ public class CommandDelete {
       return true;
     }
 
+    //Get settlement from user
+    //If settlement member count = 1 else error
+    //delete settlement
+
     return true;
   }
 }

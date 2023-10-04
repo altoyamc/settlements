@@ -15,6 +15,10 @@ public class CommandUninvite {
       return true;
     }
 
+    //Get settlement from player
+    //Check has an invite currently for user
+    //Start vote for user being removed from invites
+
     return true;
   }
 

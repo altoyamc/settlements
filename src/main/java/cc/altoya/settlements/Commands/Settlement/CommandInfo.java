@@ -15,6 +15,9 @@ public class CommandInfo {
       return true;
     }
 
+    //Get settlement from user
+    //Send information to player
+
     return true;
   }
 
