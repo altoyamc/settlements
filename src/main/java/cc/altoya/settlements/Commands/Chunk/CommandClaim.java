@@ -1,14 +1,11 @@
 package cc.altoya.settlements.Commands.Chunk;
 
-import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import cc.altoya.settlements.Util.ChatUtil;
@@ -27,8 +24,7 @@ public class CommandClaim {
 
     int claimCount = claimCount(uuid);
 
-    File file = new File(Bukkit.getServer().getPluginManager().getPlugin("settlements").getDataFolder(), "config.yml");
-    FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+    FileConfiguration config = GeneralUtil.getPluginConfig("settlements", "config.yml");
 
     int claimCountLimit = config.getInt("claimCountLimit");
     int claimCloseByHowManyChunks = config.getInt("claimCloseByHowManyChunks");
@@ -50,7 +46,7 @@ public class CommandClaim {
       return true;
     }
 
-    String trusted = "{" + uuid + "}";
+    String trusted = DatabaseUtil.getStringFromJson(uuid);
 
     String query = "INSERT INTO claims (uuid, x, y, trusted) VALUES (?, ?, ?, ?)";
     try {
@@ -76,8 +72,7 @@ public class CommandClaim {
   }
 
   public static boolean claimWithinBoundary(int x, int y) {
-    File file = new File(Bukkit.getServer().getPluginManager().getPlugin("settlements").getDataFolder(), "config.yml");
-    FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+    FileConfiguration config = GeneralUtil.getPluginConfig("settlement", "config.yml");
 
     int claimChunkBoundary = config.getInt("claimChunkBoundary");
 

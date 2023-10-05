@@ -1,5 +1,10 @@
 package cc.altoya.settlements.Util;
 
+import java.io.File;
+
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 public class GeneralUtil {
@@ -15,5 +20,10 @@ public class GeneralUtil {
     }
 
     return true;
+  }
+
+  public static FileConfiguration getPluginConfig(String pluginName, String configFilename){
+    File file = new File(Bukkit.getServer().getPluginManager().getPlugin(pluginName).getDataFolder(), configFilename);
+    return YamlConfiguration.loadConfiguration(file);
   }
 }
