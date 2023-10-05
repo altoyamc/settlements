@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import cc.altoya.settlements.Util.ChatUtil;
+import cc.altoya.settlements.Util.ClaimUtil;
 import cc.altoya.settlements.Util.DatabaseUtil;
 import cc.altoya.settlements.Util.GeneralUtil;
 
@@ -18,32 +19,29 @@ public class CommandList {
       return true;
     }
 
-    String uuid = player.getUniqueId().toString();
+    ResultSet claims = ClaimUtil.getPlayerClaims(player);
 
-    String query = "SELECT * FROM claims WHERE uuid = ?";
     try {
-      PreparedStatement selectStatement = DatabaseUtil.getConnection().prepareStatement(query);
-      selectStatement.setString(1, uuid);
-      ResultSet resultSet = selectStatement.executeQuery();
+      while(claims.next()){
+        player.sendMessage(ChatUtil.getPrimaryColour() + "=======================================");
 
-      player.sendMessage(ChatUtil.getPrimaryColour() + "=======================================");
+        while (claims.next()) {
+          String[] existingTrusted = claims.getString("trusted").replaceAll("[{}]", "").split(",");
+          String names = "";
+          for(String trusted : existingTrusted){
+            names += Bukkit.getOfflinePlayer(UUID.fromString(trusted)).getName() + ",";
+          }
+          names = names.substring(0, names.length() - 1);
 
-      while (resultSet.next()) {
-        String[] existingTrusted = resultSet.getString("trusted").replaceAll("[{}]", "").split(",");
-        String names = "";
-        for(String trusted : existingTrusted){
-          names += Bukkit.getOfflinePlayer(UUID.fromString(trusted)).getName() + ",";
+          int x = claims.getInt("x");
+          int y = claims.getInt("y");
+
+          player.sendMessage(ChatUtil.getSecondaryColour() + "X: " + x + " Y: " + y + " Trusted Users: " + names);
         }
-        names = names.substring(0, names.length() - 1);
 
-        int x = resultSet.getInt("x");
-        int y = resultSet.getInt("y");
+        player.sendMessage(ChatUtil.getPrimaryColour() + "=======================================");
 
-        player.sendMessage(ChatUtil.getSecondaryColour() + "X: " + x + " Y: " + y + " Trusted Users: " + names);
       }
-
-      player.sendMessage(ChatUtil.getPrimaryColour() + "=======================================");
-
     } catch (SQLException e) {
       e.printStackTrace();
     }

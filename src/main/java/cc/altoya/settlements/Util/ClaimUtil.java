@@ -59,4 +59,21 @@ public class ClaimUtil {
 
     return false;
   }
+
+  public static ResultSet getPlayerClaims(Player player){
+    String uuid = player.getUniqueId().toString();
+
+    String query = "SELECT * FROM claims WHERE uuid = ?";
+    try {
+      PreparedStatement selectStatement = DatabaseUtil.getConnection().prepareStatement(query);
+      selectStatement.setString(1, uuid);
+      ResultSet resultSet = selectStatement.executeQuery();
+
+      return resultSet;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return null;
+  }
 }
