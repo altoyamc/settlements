@@ -8,21 +8,17 @@ import org.bukkit.entity.Player;
 
 import cc.altoya.settlements.Util.ChatUtil;
 import cc.altoya.settlements.Util.DatabaseUtil;
+import cc.altoya.settlements.Util.GeneralUtil;
 import cc.altoya.settlements.Util.SettlementsUtil;
 
 public class CommandInvite {
   public static boolean handle(Player player, String[] args) {
-    if (!player.hasPermission("settlements.invite")) {
-      ChatUtil.sendErrorMessage(player, "You don't have permission to run this command.");
-      return true;
-    }
-    if (args.length != 2) {
-      ChatUtil.sendErrorMessage(player, "This command only requires two argument. /settlement invite {username}");
+    if(!GeneralUtil.handlePermissionsAndArguments(player, "settlements", "invite", args, 2, "/settlement invite {username}")){
       return true;
     }
 
     UUID playerUUID = player.getUniqueId();
-    ResultSet settlement = SettlementsUtil.getSettlement(playerUUID);
+    ResultSet settlement = SettlementsUtil.getSettlementViaUUID(playerUUID);
 
     try {
       String invites = settlement.getString("invited_uuids");

@@ -11,15 +11,11 @@ import org.bukkit.entity.Player;
 
 import cc.altoya.settlements.Util.ChatUtil;
 import cc.altoya.settlements.Util.DatabaseUtil;
+import cc.altoya.settlements.Util.GeneralUtil;
 
 public class CommandTrust {
   public static boolean handle(Player player, String[] args) {
-    if (!player.hasPermission("settlements.trust")) {
-      ChatUtil.sendErrorMessage(player, "You don't have permission to run this command.");
-      return true;
-    }
-    if (args.length != 2) {
-      ChatUtil.sendErrorMessage(player, "This command only requires two argument. /chunk trust {username}");
+    if(!GeneralUtil.handlePermissionsAndArguments(player, "settlements", "trust", args, 2, "/chunk trust {username}")){
       return true;
     }
 

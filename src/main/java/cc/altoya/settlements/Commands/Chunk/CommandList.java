@@ -10,15 +10,11 @@ import org.bukkit.entity.Player;
 
 import cc.altoya.settlements.Util.ChatUtil;
 import cc.altoya.settlements.Util.DatabaseUtil;
+import cc.altoya.settlements.Util.GeneralUtil;
 
 public class CommandList {
   public static boolean handle(Player player, String[] args) {
-    if (!player.hasPermission("settlements.list")) {
-      ChatUtil.sendErrorMessage(player, "You don't have permission to run this command.");
-      return true;
-    }
-    if (args.length != 1) {
-      ChatUtil.sendErrorMessage(player, "This command only requires one argument. /chunk list");
+    if(!GeneralUtil.handlePermissionsAndArguments(player, "settlements", "list", args, 1, "/chunk list")){
       return true;
     }
 

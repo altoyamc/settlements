@@ -7,15 +7,11 @@ import org.bukkit.entity.Player;
 
 import cc.altoya.settlements.Util.ChatUtil;
 import cc.altoya.settlements.Util.DatabaseUtil;
+import cc.altoya.settlements.Util.GeneralUtil;
 
 public class CommandUnclaimAll {
   public static boolean handle(Player player, String[] args) {
-    if (!player.hasPermission("settlements.trust")) {
-      ChatUtil.sendErrorMessage(player, "You don't have permission to run this command.");
-      return true;
-    }
-    if (args.length != 1) {
-      ChatUtil.sendErrorMessage(player, "This command only requires one argument. /chunk unclaimall");
+    if(!GeneralUtil.handlePermissionsAndArguments(player, "settlements", "unclaimall", args, 1, "/chunk unclaimall")){
       return true;
     }
 

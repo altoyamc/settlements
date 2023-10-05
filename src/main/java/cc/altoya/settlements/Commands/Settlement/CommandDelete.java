@@ -9,21 +9,17 @@ import org.bukkit.entity.Player;
 
 import cc.altoya.settlements.Util.ChatUtil;
 import cc.altoya.settlements.Util.DatabaseUtil;
+import cc.altoya.settlements.Util.GeneralUtil;
 import cc.altoya.settlements.Util.SettlementsUtil;
 
 public class CommandDelete {
   public static boolean handle(Player player, String[] args) {
-    if (!player.hasPermission("settlements.delete")) {
-      ChatUtil.sendErrorMessage(player, "You don't have permission to run this command.");
-      return true;
-    }
-    if (args.length != 1) {
-      ChatUtil.sendErrorMessage(player, "This command only requires one argument. /settlement delete");
+    if(!GeneralUtil.handlePermissionsAndArguments(player, "settlements", "delete", args, 1, "/settlement delete")){
       return true;
     }
 
     UUID playerUUID = player.getUniqueId();
-    ResultSet settlement = SettlementsUtil.getSettlement(playerUUID);
+    ResultSet settlement = SettlementsUtil.getSettlementViaUUID(playerUUID);
     try {
       String uuids = settlement.getString("uuids");
       if(DatabaseUtil.getListFromJson(uuids).length != 1){

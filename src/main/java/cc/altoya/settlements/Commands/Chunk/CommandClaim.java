@@ -13,17 +13,14 @@ import org.bukkit.entity.Player;
 
 import cc.altoya.settlements.Util.ChatUtil;
 import cc.altoya.settlements.Util.DatabaseUtil;
+import cc.altoya.settlements.Util.GeneralUtil;
 
 public class CommandClaim {
   public static boolean handle(Player player, String[] args) {
-    if (!player.hasPermission("settlements.claim")) {
-      ChatUtil.sendErrorMessage(player, "You don't have permission to run this command.");
+    if(!GeneralUtil.handlePermissionsAndArguments(player, "settlements", "child", args, 1, "/chunk claim")){
       return true;
     }
-    if (args.length != 1) {
-      ChatUtil.sendErrorMessage(player, "This command only requires one argument. /chunk claim");
-      return true;
-    }
+
     String uuid = player.getUniqueId().toString();
     int x = player.getLocation().getChunk().getX();
     int y = player.getLocation().getChunk().getZ();
@@ -37,17 +34,18 @@ public class CommandClaim {
     int claimCloseByHowManyChunks = config.getInt("claimCloseByHowManyChunks");
     int claimChunkBoundary = config.getInt("claimChunkBoundary");
 
-    if(claimCount != 0 && !connectedToCurrentClaims(uuid, x, y)){
-      ChatUtil.sendErrorMessage(player, "Your claims must be within " + claimCloseByHowManyChunks + " chunk of each other.");
+    if (claimCount != 0 && !connectedToCurrentClaims(uuid, x, y)) {
+      ChatUtil.sendErrorMessage(player,
+          "Your claims must be within " + claimCloseByHowManyChunks + " chunk of each other.");
       return true;
     }
 
-    if(claimCount > claimCountLimit){
+    if (claimCount > claimCountLimit) {
       ChatUtil.sendErrorMessage(player, "You have hit your claim limit of " + claimCountLimit + ".");
       return true;
     }
 
-    if(!claimWithinBoundary(x, y)){
+    if (!claimWithinBoundary(x, y)) {
       ChatUtil.sendErrorMessage(player, "You must claim within " + claimChunkBoundary + " chunks of spawn.");
       return true;
     }
@@ -77,7 +75,7 @@ public class CommandClaim {
     return true;
   }
 
-  public static boolean claimWithinBoundary(int x, int y){
+  public static boolean claimWithinBoundary(int x, int y) {
     File file = new File(Bukkit.getServer().getPluginManager().getPlugin("settlements").getDataFolder(), "config.yml");
     FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 
@@ -89,14 +87,14 @@ public class CommandClaim {
     return withinX && withinY;
   }
 
-  public static int claimCount(String uuid){
+  public static int claimCount(String uuid) {
     String query = "SELECT * FROM claims WHERE uuid = ?";
     int count = 0;
     try {
       PreparedStatement selectStatement = DatabaseUtil.getConnection().prepareStatement(query);
       selectStatement.setString(1, uuid);
       ResultSet resultSet = selectStatement.executeQuery();
-    
+
       while (resultSet.next()) {
         count++;
       }
@@ -107,19 +105,19 @@ public class CommandClaim {
     return count;
   }
 
-  public static boolean connectedToCurrentClaims(String uuid, int x, int y){
+  public static boolean connectedToCurrentClaims(String uuid, int x, int y) {
     String query = "SELECT * FROM claims WHERE uuid = ?";
     try {
       PreparedStatement selectStatement = DatabaseUtil.getConnection().prepareStatement(query);
       selectStatement.setString(1, uuid);
       ResultSet resultSet = selectStatement.executeQuery();
-    
+
       while (resultSet.next()) {
         int currentX = resultSet.getInt("x");
         int currentY = resultSet.getInt("y");
         boolean isWithinOneOfX = Math.abs(x - currentX) <= 1;
         boolean isWithinOneOfY = Math.abs(y - currentY) <= 1;
-        if(isWithinOneOfX && isWithinOneOfY){
+        if (isWithinOneOfX && isWithinOneOfY) {
           return true;
         }
       }
@@ -130,4 +128,3 @@ public class CommandClaim {
     return false;
   }
 }
-
