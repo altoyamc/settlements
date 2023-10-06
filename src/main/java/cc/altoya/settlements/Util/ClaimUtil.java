@@ -12,6 +12,17 @@ public class ClaimUtil {
     int x = location.getChunk().getX();
     int y = location.getChunk().getZ();
 
+    try {
+      if(getClaimViaCoords(x, y).next()){
+        return true;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+  public static ResultSet getClaimViaCoords(int x, int y){
     String query = "SELECT * FROM claims WHERE x = ? AND y = ?";
 
     try {
@@ -20,14 +31,15 @@ public class ClaimUtil {
       selectStatement.setInt(2, y);
       ResultSet resultSet = selectStatement.executeQuery();
       if(resultSet.next()){
-        return true;
+        return resultSet;
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
 
-    return false;
+    return null;
   }
+
 
   public static boolean isPlayerTrusted(Player player, Location location){
     if(!isLocationClaimed(location)){

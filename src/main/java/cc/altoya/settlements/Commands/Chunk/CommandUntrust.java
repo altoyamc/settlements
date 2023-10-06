@@ -10,6 +10,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import cc.altoya.settlements.Util.ChatUtil;
+import cc.altoya.settlements.Util.ClaimUtil;
 import cc.altoya.settlements.Util.DatabaseUtil;
 import cc.altoya.settlements.Util.GeneralUtil;
 
@@ -33,16 +34,11 @@ public class CommandUntrust {
     int x = player.getLocation().getChunk().getX();
     int y = player.getLocation().getChunk().getZ();
 
-    String query = "SELECT * FROM claims WHERE x = ? AND y = ?";
-
     try {
-      PreparedStatement selectStatement = DatabaseUtil.getConnection().prepareStatement(query);
-      selectStatement.setInt(1, x);
-      selectStatement.setInt(2, y);
-      ResultSet resultSet = selectStatement.executeQuery();
+      ResultSet claim =ClaimUtil.getClaimViaCoords(x, y);
 
-      if (resultSet.next()) {
-        String existingTrusted = resultSet.getString("trusted").replaceAll("}", "");
+      if (claim.next()) {
+        String existingTrusted = claim.getString("trusted").replaceAll("}", "");
 
         if (!existingTrusted.contains(targetUUID.toString())) {
           ChatUtil.sendErrorMessage(player, "This person isn't trusted.");

@@ -1,6 +1,5 @@
 package cc.altoya.settlements.Commands.Chunk;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
@@ -10,7 +9,6 @@ import org.bukkit.entity.Player;
 
 import cc.altoya.settlements.Util.ChatUtil;
 import cc.altoya.settlements.Util.ClaimUtil;
-import cc.altoya.settlements.Util.DatabaseUtil;
 import cc.altoya.settlements.Util.GeneralUtil;
 
 public class CommandList {
