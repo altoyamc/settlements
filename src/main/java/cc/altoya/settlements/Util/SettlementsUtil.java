@@ -38,6 +38,28 @@ public class SettlementsUtil {
     
     return resultSet;
   }
+  
+  public static boolean setSettlementValues(String name, String description, String uuids, String invitedUuids, String votesIds){
+    String query = "INSERT INTO settlements (name, description, uuids, invited_uuids, votes_ids) VALUES (?, ?, ?, ?, ?)";
+    try {
+      PreparedStatement statement = DatabaseUtil.getConnection().prepareStatement(query);
+      statement.setString(1, name);
+      statement.setString(2, description);
+      statement.setString(3, uuids);
+      statement.setString(4, invitedUuids);
+      statement.setString(4, votesIds);
+
+      int rowsAffected = statement.executeUpdate();
+
+      if (rowsAffected > 0) {
+        return true;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return false;
+  }
 
   public static boolean createVoteFor(String settlementName, int actionId, String[] allowedVotersList){
     String insertStatement = "INSERT INTO votes (action_id, allowed_voters, yes_count, no_count) VALUES (?, ?, 0, 0)";

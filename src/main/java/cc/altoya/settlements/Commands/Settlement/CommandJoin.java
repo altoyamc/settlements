@@ -2,11 +2,14 @@ package cc.altoya.settlements.Commands.Settlement;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.UUID;
 
 import org.bukkit.entity.Player;
 
 import cc.altoya.settlements.Util.ChatUtil;
+import cc.altoya.settlements.Util.DatabaseUtil;
 import cc.altoya.settlements.Util.GeneralUtil;
 import cc.altoya.settlements.Util.SettlementsUtil;
 
@@ -31,13 +34,59 @@ public class CommandJoin {
 
     try {
       String invites = newSettlement.getString("invited_uuids");
-      if(invites.contains(playerUUID.toString())){
+      if(!invites.contains(playerUUID.toString())){
         ChatUtil.sendErrorMessage(player, "You don't have an invite to this settlement");
         return true;
       }
     } catch (SQLException e) {
       e.printStackTrace();
-      return true;
+    }
+
+    String updatedInvites;
+    String updatedUuids;
+    String name;
+    String description;
+    String voteIds;
+    try {
+      String[] invites = DatabaseUtil.getListFromJson(newSettlement.getString("invited_uuids"));
+      String[] uuids = DatabaseUtil.getListFromJson(newSettlement.getString("uuids"));
+
+      voteIds = newSettlement.getString("votes_ids");
+      name = newSettlement.getString("name");
+      description = newSettlement.getString("description");
+
+
+      ArrayList<String> tempInvites = new ArrayList<String>();
+      ArrayList<String> tempUuids = (ArrayList<String>) Arrays.asList(uuids);
+
+      
+      for(String invite : invites){
+        if(invite.equals(playerUUID.toString())){
+          continue;
+        }
+        tempInvites.add(invite);
+      }
+
+      tempUuids.add(playerUUID.toString());
+
+      DatabaseUtil.getStringFromJson((String[]) tempInvites.toArray());
+      DatabaseUtil.getStringFromJson((String[]) tempUuids.toArray());
+
+      updatedInvites = DatabaseUtil.getStringFromJson((String[]) tempInvites.toArray());
+      updatedUuids = DatabaseUtil.getStringFromJson((String[]) tempUuids.toArray());
+
+      boolean updatedSuccess = SettlementsUtil.setSettlementValues(name, description, updatedUuids, updatedInvites, voteIds);
+
+      if(updatedSuccess){
+        ChatUtil.sendSuccessMessage(player, "You have successfully joined " + name);
+        return true;
+      } else {
+        ChatUtil.sendErrorMessage(player, "You failed to join " + name);
+        return true;
+      }
+
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
 
 
